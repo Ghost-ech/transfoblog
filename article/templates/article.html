@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}
+  Listes des articles
+{% endblock title %}
+
+{% block content %}
+
+
+<div class="container-fluid">
+  <div class="row" style="padding-top: 10rem;">
+    <div class="col-lg-8 col-sm-8">
+        {% if user.is_authentificated %}
+          <p> Vous êtes connecté en tant que {{ request.user }}</p>
+          
+        {% endif %}
+        
+        <h4 class="mb-5"><strong>Liste des articles</strong></h4>
+        <center><a href="/creer_article" class="btn btn-info">Créer un article</a></center><br>
+          <!-- first post -->
+          <table class="table" id="article-table">
+            <thead>
+              <tr>
+                <th> # </th>
+                <th> Titre </th>
+                <th> intro </th>
+                <th> Auteur </th>
+                <th> Categorie </th>
+                <th> Date de publication</th>
+                <th> Image </th>
+                <th> Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              {% for art in article %}
+                <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>{{ art.titre }}</td>
+                  <td>{{ art.intro }}</td>
+                  <td>{{ art.auteur }}</td>
+                  <td>{{ art.category }}</td>
+                  <td>{{ art.date_pub}}</td>
+                  <td>
+                    <!-- pour definir gerer les utilisateurs qui ont ete enregistres sans profil avant 
+                    la mise a jour de la bd par exemple -->
+                  {% if art.image %}
+                     <img src="{{ art.image.url }}" style="width: 40px; height: 40px;" alt="photo"> 
+                     {% comment %}{{ art.image }}<!--  permet d'fficher l'url de l'image (chemin d'access) -->{% endcomment %}
+                  {% endif %}
+                  </td> 
+                  <td>{{ art.statut}}</td>
+                  
+                  <td> <a href="{% url 'modifier_art' art.id %}" class="btn btn-info"> <span class="glyficon glyficon-pencil"></span> Modifier</a></td>
+                  <td> <a onclick="return confDelete();" href="{% url 'supprimer_art' art.id %}" class="btn btn-danger"> Supprimer </a> </td>
+        
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="7" class="text-center bg-warning">Aucun article  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+    </div>
+    
+  </div>
+  
+</div>
+
+
+
+  <br>  
+<br> 
+
+
+{% endblock %}

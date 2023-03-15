@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if user.email == "laurette@gmail.com" %}
+    
+  
+  <h1 class="page-header" style="padding-top: 10rem;">liste des Catégories </h1>
+
+  <div class="table-responsive">
+    <center><a href="{% url 'add_category'%}" class="btn btn-primary my-3">Ajouter une nouvelle catégorie</a>  
+     
+    <table class="table  table-hover  table-sm">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nom catégorie </th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for category in category %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{ category.name }}</td> 
+            
+            {# <td> <a class= "btn btn-info" href="{% url 'modifier' category.id %}"><i class="fas fa-pen"></i> &ensp; Modifier</a></td> #}
+            <td> <a class= "btn btn-danger" onclick="return confDelete();" href="/supprimer_categorie/{{category.id}}"> <i class="fas fa-trash"></i> &ensp; Supprimer</a> </td>
+  
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="7" class="text-center bg-warning">Aucune Catégorie existante!  </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+  <br>  
+  <br>
+  {% else %}
+    <h2 style="padding: 10rem 0rem 15rem 0rem;">Vous n'avez pas le droit d'accéder à cette page!!</h2>
+  {% endif %}
+
+{% endblock %}

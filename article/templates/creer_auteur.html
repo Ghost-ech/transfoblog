@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  
+
+  <div class="container">
+    <div class="row mx-2 py-5">
+      <div class="col-sm-3"></div>
+    <div class="rounded col-sm-6 shadow ">
+      <div class="">
+        <div class="card-header bg-info text-center my-3">
+            Nouvel auteur 
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-center">Formulaire d'enregistrement  </h5>
+          <form method="POST" enctype="multipart/form-data" class="post-form" >  
+            {% csrf_token %}   
+            <div class="form-group row"> 
+              <div class="label">
+                <label class="col-form-label"> Username</label>  
+              </div>
+              <div class="">  
+                {{ user_form.username }}  
+              </div>   
+            </div>  
+            <div class="form-group row"> 
+              <div class="label">
+                <label class="col-form-label"> First Name</label>  
+              </div>  
+              <div class="">  
+                {{ user_form.first_name }}  
+              </div>  
+            </div>  
+            <div class="form-group row">  
+              <div class="label">
+                <label class="col-form-label"> Last Name</label>  
+              </div>  
+              <div class="">  
+                {{ user_form.last_name }}  
+              </div>  
+            </div>
+            <div class="form-group row">  
+              <div class="label">
+                <label class="col-form-label"> Email</label>  
+              </div> 
+              <div class="">  
+                {{ user_form.email }}  
+              </div>  
+            </div>
+            {% if typeform == "create" %}  
+              <div class="form-group row">  
+                <div class="label" style="border-radius: 50px; max-width: 100%;">
+                  <label class="col-form-label"> Password</label>  
+                </div>  
+                <div class="" >  
+                  {{ user_form.password1 }} 
+                  <div class="input-group-addon">
+                    <i class="fas fa-eye " style="position: relative;
+                                                  height: 25%; z-index: 1; 
+                                                  font-size: 25px;
+                                                  top: -1.9rem;
+                                                  right: -28rem;" 
+                                                  id="eye" 
+                                                  onclick="changer()"></i> 
+                  </div>
+                </div>  
+              </div>  
+              <div class="form-group row">  
+                <div class="label">
+                  <label class="col-form-label"> Confirm Password</label>  
+                </div> 
+                <div class="">  
+                  {{ user_form.password2 }} 
+                  <div class="input-group-addon">
+                    <i class="fas fa-eye " style="position: relative;
+                                                  height: 25%; z-index: 1; 
+                                                  font-size: 25px;
+                                                  top: -2rem;
+                                                  right: -28rem;" 
+                                                  id="eye1" 
+                                                  onclick="changer1()"></i> 
+                  </div> 
+                </div>  
+              </div>
+            {% endif %} 
+            <div class="form-group row">  
+              <div class="label">
+                <label class="col-form-label"> Statut </label>  
+              </div> 
+              <div class="">  
+                {{ form.status }}  
+              </div>  
+            </div> 
+            <div class="form-group row">  
+              <di class="label">
+                <label class="col-form-label"> Photo de profil</label>  
+              </div>  
+              <div class="">  
+                {{ form.profil }}  
+              </div> 
+              <div class="" id="display_image"
+                    style="position: relative;
+                    width: 75%;
+                    height: 150px;
+                    border: 2px solid #d3d3d3;
+                    margin: auto;
+                    border-radius: 10px;
+                    overflow: hidden;
+                    background-size: contain;
+                  ">
+                 
+              </div> 
+            </div> 
+            <div class="form-group row">  
+              <label class="col-form-label"></label>  
+              <div class=" text-center ">  
+                <button type="submit" onclick="return confValid();" class="btn btn-primary col-sm-4 my-2"> Valider </button> 
+                {{erreur}} 
+                {{err}}
+              </div>
+            </div>   
+          </form>
+        </div>
+        <div class="col-sm-3"> </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <script>
+    function confDelete() {
+        return confirm("Voulez-vous vraiment supprimer cet utilisateur ?");
+    }
+
+    function confValid() {
+        return confirm("Valider ces informations si elles sont correctes"); 
+    }
+
+    const image = document.querySelector("#image"); 
+    var upload_image = ""; 
+    image.addEventListener("change", function(){
+      const reader = new FileReader(); 
+      reader.addEventListener("load", () => {
+        upload_image = reader.result;
+        document.querySelector("#display_image").style.backgroundImage = `url(${upload_image})`
+      }); 
+      reader.readAsDataURL(this.files[0]); 
+    })
+
+    password = document.getElementById('pass');
+    password1 = document.getElementById('pass1');
+    icon = document.getElementById('eye');
+    icon1 = document.getElementById('eye1');
+      function changer() {
+          if (password.type == 'password')
+          {
+            password.type='text';
+            icon.className='fas fa-eye-slash';
+          }
+          else
+          {
+            password.type='password';
+            icon.className='fas fa-eye';
+          }
+        }
+
+        function changer1() {
+          if (password1.type == 'password')
+          {
+            password1.type='text';
+            icon1.className='fas fa-eye-slash';
+          }
+          else
+          {
+            password1.type='password';
+            icon1.className='fas fa-eye';
+          }
+        }
+  </script>
+
+{% endblock content %} 

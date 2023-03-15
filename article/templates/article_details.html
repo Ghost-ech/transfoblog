@@ -1,0 +1,57 @@
+{% extends 'base.html'%}
+{% block title %}
+    {{ article.slug }}
+{% endblock title %}
+
+{% block content %}
+    <div class="pl-5" style="padding-top: 10rem;">
+        <a href="{% url 'listes_articles' %}" class="btn shadow">Retour</a>
+    </div>
+    <div class="col-md-7 mx-auto text-center" >
+        <h1>{{ article.titre }}</h1>
+        
+        <img src="{{ article.image.url }}"  class="img-fluid"/>
+        
+        <h1>{{ article.title }}</h1> <br>
+        <small> {{ article.date_added }} </small><br>
+        <strong>{{ article.intro }}</strong><br><br><br>
+        <p style="color:rgb(42, 51, 42); text-align: justify; font-family: Arial, Helvetica, sans-serif;">{{ article.contenu|safe }}</p><br><br>
+        <!-- <img src="{{ article.auteur.profil.url }}" style="width: 40px; height: 40px;" alt="photo"> -->
+        <h4 class="text-end">Ecrit par: <strong>{{ article.auteur.first_name }} {{ article.auteur.last_name }}</strong></h4><br>
+
+        
+    <hr>
+    <div class=" container-fluid d-flex justify-content-start">
+        <div class="">
+            <div class="">
+                <h3>Commentaires</h3>
+            </div>
+            <div class="card-body">
+                <div>
+                    {% for comment in comments %}
+                <article>
+                <strong class="text-align-left text-success">{{ comment.name }}</strong>  {{ comment.date_added }} - {{ comment.body | safe }}
+                <p style="font-family: Arial, Helvetica, sans-serif;"></p>
+                {% empty %}
+                <p>Pas de commentaire</p> 
+                </article>    
+                {% endfor %}
+                </div> 
+            </div>
+        </div>
+    </div>        
+        
+    
+    <h3 class="mx-5">Ajouter un nouveau commentaire</h3>
+    <form class="form-control form-comtrol-lg shadow" action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn text-white bg-success">commenter</button>
+    </form>
+
+
+</div><br><br>
+
+
+
+{% endblock %}

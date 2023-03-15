@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}
+  Login
+{% endblock title %}
+{% block content%}
+
+<div class="container">
+  <div class="row mx-2 py-5">
+    <div class="col-sm-3"></div>
+    <div class="rounded col-sm-6 shadow ">
+      <div class="">
+        <div class="card-header bg-info text-center my-3">
+            Authentification
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-center"> </h5>
+          <p>{{ message }}</p>
+          <form method="post">
+              {% csrf_token %}
+              <div class="form-group row"> 
+                  <div class="label">
+                    <label class="col-form-label"> Username</label>  
+                  </div>
+                  <div class="">  
+                    {{ form.username }}  
+                  </div>   
+              </div> 
+              <div class="form-group row">  
+                <label class="col-form-label "> Password </label>
+                <div class="input-group">
+                  {{ form.password }}
+                  <div class="input-group-addon">
+                    <i class="fas fa-eye " style="position: absolute;
+                                                  height: 25%; z-index: 1; 
+                                                  font-size: 25px;
+                                                  top: 0.4rem;
+                                                  right: 1rem;" 
+                                                  id="eye" 
+                                                  onclick="changer()"></i> 
+                  </div>
+                </div>
+              </div> 
+             
+              <!-- {{ form.as_p }}
+              {% csrf_token %} -->
+
+              <!-- <div class="text-center">
+                  <div class="input submit btn btn-primary text-center col-sm-4 my-2" onclick="document.fo.submit()"> S'authentifier </div>
+              </div> 
+               -->
+
+              <div class="text-center">
+                  <button type="submit" class="btn btn-primary col-sm-4 my-2"> S'authentifier  </button>
+              </div> 
+              
+          </form>
+        </div>
+        <div class="col-sm-3"></div>
+      </div>
+
+    </div>
+    
+  </div>
+  
+  
+</div>
+
+
+
+    
+{% endblock content %}

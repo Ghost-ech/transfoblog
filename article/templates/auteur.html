@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if user.email == "laurette@gmail.com" %}
+    
+  
+  <h1 class="page-header" style="padding-top: 10rem;">liste des Auteurs </h1>
+
+  <div class="table-responsive">
+    <center><a href="/creer_auteur" class="btn btn-primary my-3">Ajouter un nouvel auteur</a>  
+    <a href="/list_article" class="btn btn-secondary my-3">Liste des articles</a></center> 
+    <table class="table  table-hover  table-sm">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Username </th>
+          <th>Password </th>
+          <th>Status </th>
+          <th>Profil </th>
+  
+        </tr>
+      </thead>
+      <tbody>
+        {% for aut in auteur %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{ aut.user.username }}</td>
+            <td>{{ aut.user.password2 }}</td>
+            <td>{{ aut.status}}</td>
+            <td>
+              <!-- pour definir gerer les utilisateurs qui ont ete enregistres sans profil avant 
+              la mise a jour de la bd par exemple -->
+            {% if aut.profil %}
+               <img src="{{ aut.profil.url }}" style="width: 40px; height: 40px;" alt="photo"> 
+               {% comment %}{{ aut.profil.url }}<!--  permet d'fficher l'url de l'image (chemin d'access) -->{% endcomment %}
+            {% endif %}
+            </td> 
+            
+            <td> <a class= "btn btn-info" href="{% url 'modifier' aut.user.id %}"><i class="fas fa-pen"></i> &ensp; Modifier</a></td>
+            <td> <a class= "btn btn-danger" onclick="return confDelete();" href="/supprimer_auteur/{{aut.user.id}}"> <i class="fas fa-trash"></i> &ensp; Supprimer</a> </td>
+  
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="7" class="text-center bg-warning">Aucun auteur  </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+  <br>  
+  <br>
+  {% else %}
+    <h2 style="padding: 10rem 0rem 15rem 0rem;">Vous n'avez pas le droit d'accéder à cette page!!</h2>
+  {% endif %}
+
+{% endblock %}

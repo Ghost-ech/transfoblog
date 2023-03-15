@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% block title %}
+  Créer article
+{% endblock title %}
+
+
+{% block content %}
+
+  <div class="container" style="padding-top: 10rem;">
+    <div class="row mx-2 py-5">
+      <div class="col-sm-3"></div>
+      <div class="rounded col-sm-10 shadow ">
+        <div class="">
+          <div class="card-header bg-info text-center my-3">
+              Nouvel article 
+          </div>
+          <div class="card-body">
+            <h5 class="card-title text-center">Formulaire d'enregistrement  </h5>
+            <form method="POST" enctype="multipart/form-data" class="post-form" >  
+              {% csrf_token %} 
+              
+              <div class="container">  
+                <br>   
+                <div class="form-group row">  
+                  <div class="label">
+                    <label class=" col-form-label"> Titre </label>  
+                  </div>
+                  <div class="">  
+                    {{ form_art.titre }}  
+                  </div>   
+                </div>  
+                <div class="form-group row">  
+                  <div class="label">
+                    <label class=" col-form-label"> Slug </label>  
+                  </div>
+                  <div class="">  
+                    {{ form_art.slug }}  
+                  </div>  
+                </div>  
+                <div class="form-group row">
+                  <div class="label">
+                    <label class=" col-form-label"> Image </label>  
+                  </div>  
+                  <div class="">  
+                    {{ form_art.image }}  
+                  </div>
+                  <div class="" id="display_image"
+                    style="position: relative;
+                    width: 75%;
+                    height: 150px;
+                    border: 2px solid #d3d3d3;
+                    margin: auto;
+                    border-radius: 10px;
+                    overflow: hidden;
+                    background-size: contain;
+                  ">
+                 
+                  </div>  
+                </div>
+                <div class="form-group row">  
+                  <div class="label">
+                    <label class=" col-form-label">Auteur </label>  
+                  </div> 
+                  <div class="">  
+                    {{ form_art.auteur }}  
+                  </div> 
+                  <small>choissisez un auteur dans la liste </small> 
+                </div>  
+                <div class="form-group row">  
+                  <!-- <div class="label">
+                    <label class=" col-form-label">Date  de publication</label>  
+                  </div>  -->
+                  <div class="">  
+                    {{ form_art.date_pub }}  
+                  </div>  
+                </div>
+                <div class="form-group row">  
+                  <div class="label">
+                    <label class=" col-form-label">intro de l'article  </label>  
+                  </div>  
+                  <div class="">  
+                    {{ form_art.intro }}  
+                  </div>  
+                </div>    
+                <div class="form-group row">  
+                  <div class="label">
+                    <label class=" col-form-label">Texte de l'article  </label>  
+                  </div>  
+                  <div class="">  
+                    {{ form_art.media}}
+                    {{ form_art.contenu }}  
+                  </div>  
+                </div> 
+                <div class="form-group row">  
+                  <div class="label">
+                    <label class=" col-form-label">Statut </label>  
+                  </div>
+                  <div class="">  
+                    {{ form_art.statut }}  
+                  </div> 
+                  <small>Definissez le statut de l'article suivant la liste </small> 
+                </div> 
+                <div class="form-group row">  
+                  <div class="label">
+                    <label class=" col-form-label"> Categorie </label>  
+                  </div> 
+                  <div class="">  
+                    {{ form_art.category }}  
+                  </div>  
+                  <small>Definissez la categorie de l'article suivant la liste </small>
+                </div>
+                <div class="form-group row">  
+                  <label class="col-form-label"></label>  
+                  <div class="text-center">  
+                    <button type="submit" onclick="return confValid();" class="btn btn-primary col-sm-4"> Valider </button> 
+                    {{erreurs}} 
+                  </div>  
+                </div>  
+              </div>  
+            </form> 
+          </div>
+          <div class="col-sm-3"></div>
+        </div>
+
+      </div>
+      
+    </div>
+    
+    
+  </div>
+
+  
+
+  <script>
+    function confDelete() {
+        return confirm("Voulez-vous vraiment supprimer cet utilisateur ?");
+    }
+
+    function confValid() {
+        return confirm("Valider ces informations si elles sont correctes"); 
+    }
+
+    
+    const image = document.querySelector("#img"); 
+    var upload_image = ""; 
+    image.addEventListener("change", function(){
+      const reader = new FileReader(); 
+      reader.addEventListener("load", () => {
+        upload_image = reader.result;
+        document.querySelector("#display_image").style.backgroundImage = `url(${upload_image})`
+      }); 
+      reader.readAsDataURL(this.files[0]); 
+    })
+  </script>
+  
+
+  {% endblock content %}

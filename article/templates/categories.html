@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}
+  Catégories
+{% endblock title %}
+
+{% block content %}
+
+{% if category_posts %}
+
+
+<div class="container-fluid">
+  <div class="row" style="padding-top: 10rem;">
+    <div class="col-lg-8 col-sm-8">
+
+        <h4 class="mb-5"><strong>{{ cats }} Catégories</strong></h4>
+          <!-- first post -->
+        <div class="row">
+          {% for art in category_posts %} 
+
+            
+              <div class="col-md-4 col-sm-4 pb-5">
+                <div class="card shadow">
+                  <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                    <img src="{{ art.image.url }}"  class="img-fluid" />
+                    <a href="#!">
+                      <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                    </a>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">{{ art.titre }}</h5>
+                    <small>{{ art.date_pub }}</small>
+                    
+                    <p style="text-align:justify;" class="card-text">
+                      {{ art.intro }} 
+                    </p>
+                    <a href="/detail/{{ art.slug }}" class="btn btn-primary">lire plus</a>
+                  </div>
+                </div>
+              </div>
+            
+
+          {% endfor %}  
+            {% else %}
+              <h2 class="text-center" style="padding: 10rem 0rem 15rem 0rem;">Aucun article disponible dans cette catégorie pour le moment</h2>
+            {% endif %}
+        </div>   
+
+    </div>
+    
+  </div>
+  
+</div>
+
+<center>
+  <a href="{% url 'listes_articles' %}" class="btn btn-secondary">Retour</a>
+</center>
+
+  <br>  
+<br>  
+
+{% endblock %}

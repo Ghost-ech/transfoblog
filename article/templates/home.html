@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <header>
+        <div class="container" id="text-before">
+            <h2> Le meilleur des informations <br> I-Tech avec TransfoAfrica <br> Blog </h2>
+            
+            <br>
+                <li>  Génie logiciel  </li>
+                <li>  Solution On_premise  </li>
+                <li>  Solution Cloud  </li>
+                <li>Infrastructure réseau</li>
+                <br><br><br>
+            <a href="{% url 'listes_articles' %}" type="button" class="btn btn-primary btn-lg">Commencer <span>&#128073</span></a>
+        </div>
+            
+    </header><br>
+
+    <div class="container">
+        <h4 class="mb-5"><strong>Les postes récents</strong></h4>
+                    <!-- first post -->
+                  <div class="row">
+                    {% for post in object_list %}  
+                      {% if post.statut == 1  %}
+                        
+                      
+                        <div class="col-md-4 col-sm-4 pb-5">
+                          <div class="card shadow">
+                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                              <img src="{{ post.image.url }}"  class="img-fluid" />
+                              <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                              </a>
+                            </div>
+                            <div class="card-body">
+                              <h4 class="card-title">{{ post.titre }} </h4>
+                              <small>{{ post.date_pub }}</small><br>
+                              
+                              
+                              <p style="text-align:justify;" class="card-text">
+                                {{ post.intro }} 
+                              </p>
+                              
+                              <a href="detail/{{ post.slug }}" class="btn btn-primary">lire plus</a>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    {% endfor %}               
+                  </div>
+    </div>
+    {% block paginate %}
+        
+    {% endblock paginate %}
+
+
+
+{% endblock %}

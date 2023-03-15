@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+{% block title %}
+    Add category
+{% endblock title %}
+
+{% block content %}
+
+
+
+<div class="container" style="padding-top: 10rem;">
+    <h1>Ajouter une Catégorie</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-secondary">Post</button>
+    </form>
+</div>
+
+
+
+{% endblock %}
